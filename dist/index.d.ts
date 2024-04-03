@@ -14,16 +14,24 @@ export declare class Snowflake {
      *
      * @type {number}
      */
-    static SHARD_ID: number | null;
+    static SHARD_ID: number;
+    /**
+     * The sequence of the current running generator.
+     *
+     * Defaults to "1".
+     *
+     * @type {number}
+     */
+    static SEQUENCE: number;
     /**
      * Generates a single snowflake.
      * @param {Date|number} [timestamp = Date.now] - Timestamp to generate from
      * @returns {bigint}
      */
-    static generate({ timestamp, shard_id, sequence, }?: {
+    static generate({ timestamp, shard_id, epoch, }?: {
         timestamp?: Date | number;
         shard_id?: number;
-        sequence?: number;
+        epoch?: Date | number;
     }): string;
     /**
      * Deconstruct a snowflake to its values using the `Generator.epoch`.

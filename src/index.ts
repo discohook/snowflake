@@ -46,15 +46,20 @@ export class Snowflake {
   static generate({
     timestamp = Date.now(),
     shard_id = Snowflake.SHARD_ID,
+    epoch = Snowflake.EPOCH,
   }: {
     timestamp?: Date | number;
     shard_id?: number;
+    epoch?: Date | number;
   } = {}): string {
     if (timestamp instanceof Date) timestamp = timestamp.valueOf();
     else timestamp = new Date(timestamp).valueOf();
 
+    if (epoch instanceof Date) epoch = epoch.valueOf();
+    else epoch = new Date(epoch).valueOf();
+
     // tslint:disable:no-bitwise
-    let result = (BigInt(timestamp) - BigInt(Snowflake.EPOCH)) << BigInt(22);
+    let result = (BigInt(timestamp) - BigInt(epoch)) << BigInt(22);
     result = result | (BigInt(shard_id % 1024) << BigInt(12));
     result = result | BigInt(Snowflake.SEQUENCE++ % 4096);
     // tslint:enable:no-bitwise
