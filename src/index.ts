@@ -39,7 +39,9 @@ export class Snowflake {
   /**
    * Generates a single snowflake.
    * @param {Date|number} [timestamp = Date.now] - Timestamp to generate from
-   * @returns {bigint}
+   * @param {number} [shard_id = Snowflake.SHARD_ID] - Shard ID for the snowflake
+   * @param {Date|number} [epoch = Snowflake.EPOCH] - Epoch for the snowflake
+   * @returns {string}
    */
   /* c8 ignore end */
 
@@ -68,14 +70,17 @@ export class Snowflake {
 
   /**
    * Deconstruct a snowflake to its values using the `Generator.epoch`.
-   * @param {SnowflakeResolvable|SnowflakeResolvable[]} snowflake - Snowflake(s) to deconstruct
-   * @returns {DeconstructedSnowflake|DeconstructedSnowflake[]}
+   * @param {SnowflakeResolvable} snowflake - Snowflake to deconstruct
+   * @param {Date|number} epoch - The epoch of the snowflake
+   * @returns {DeconstructedSnowflake}
    */
 
-  static parse(snowflake: SnowflakeResolvable): DeconstructedSnowflake {
+  static parse(snowflake: SnowflakeResolvable, epoch?: Date | number): DeconstructedSnowflake {
     const binary = Snowflake.binary(snowflake);
     return {
-      timestamp: Snowflake.extractBits(snowflake, 1, 41),
+      timestamp: Number(
+        (BigInt(snowflake) >> BigInt(22)) + BigInt(new Date(epoch ?? Snowflake.EPOCH).valueOf())
+      ),
       shard_id: Snowflake.extractBits(snowflake, 42, 10),
       sequence: Snowflake.extractBits(snowflake, 52),
       binary,

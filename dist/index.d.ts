@@ -26,7 +26,9 @@ export declare class Snowflake {
     /**
      * Generates a single snowflake.
      * @param {Date|number} [timestamp = Date.now] - Timestamp to generate from
-     * @returns {bigint}
+     * @param {number} [shard_id = Snowflake.SHARD_ID] - Shard ID for the snowflake
+     * @param {Date|number} [epoch = Snowflake.EPOCH] - Epoch for the snowflake
+     * @returns {string}
      */
     static generate({ timestamp, shard_id, epoch, }?: {
         timestamp?: Date | number;
@@ -35,10 +37,11 @@ export declare class Snowflake {
     }): string;
     /**
      * Deconstruct a snowflake to its values using the `Generator.epoch`.
-     * @param {SnowflakeResolvable|SnowflakeResolvable[]} snowflake - Snowflake(s) to deconstruct
-     * @returns {DeconstructedSnowflake|DeconstructedSnowflake[]}
+     * @param {SnowflakeResolvable} snowflake - Snowflake to deconstruct
+     * @param {Date|number} epoch - The epoch of the snowflake
+     * @returns {DeconstructedSnowflake}
      */
-    static parse(snowflake: SnowflakeResolvable): DeconstructedSnowflake;
+    static parse(snowflake: SnowflakeResolvable, epoch?: Date | number): DeconstructedSnowflake;
     static isValid(snowflake: string): boolean;
     /**
      * Extract bits and their values from a snowflake.
