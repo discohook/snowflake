@@ -104,13 +104,13 @@ static generate(
     {
         timestamp?: Date | number;
         shard_id?: number;
-        epoch?: number;
+        epoch?: Date | number;
     }
 ): string;
 ```
 
 ```
-static parse(snowflake: string | number | bigint): {
+static parse(snowflake: string | number | bigint, epoch?: Date | number): {
     timestamp: number;
     shard_id: number;
     binary: string;
