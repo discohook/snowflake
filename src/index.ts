@@ -88,7 +88,7 @@ export class Snowflake {
   }
 
   static isValid(snowflake: string) {
-    if (!/^[\d]{19}$/.test(snowflake)) {
+    if (!/^[\d]{17,22}$/.test(snowflake)) {
       return false;
     }
     try {
