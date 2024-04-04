@@ -46,7 +46,7 @@ export declare class Snowflake {
     /**
      * Extract bits and their values from a snowflake.
      * @param {SnowflakeResolvable} snowflake - Snowflake to extract from
-     * @param {number|bigint} shift - Number of bits to shift before extracting
+     * @param {number|bigint} start - Number of bits to shift before extracting
      * @param {number|bigint} length - Number of bits to extract before stopping
      * @returns {bigint}
      */
